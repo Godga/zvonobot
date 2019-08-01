@@ -13,6 +13,6 @@
 
 Route::get('/', 'ZvonController@index');
 
-Route::view('/register', "rl.register");
+Route::get('/register', "ZvonController@register");
 
-Route::view('/user', "PostsController@user");
+Route::post('/user', "PostsController@user");
