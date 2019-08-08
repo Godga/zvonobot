@@ -1,5 +1,5 @@
 <?php
-
+use App\Posts;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +12,15 @@
 */
 
 Route::get('/', 'ZvonController@index');
-
 Route::get('/register', "ZvonController@register");
 
-Route::post('/user', "PostsController@user");
+Route::get('/posts', 'PostsController@index');
+Route::get('/home/create', 'PostsController@create'); 
+Route::get('/home/{id}', 'PostsController@show'); 
+Route::get('/home/{id}/edit', 'PostsController@edit'); 
+Route::put('/home/{id}', 'PostsController@update'); 
+Route::post('/home/store', 'PostsController@store'); 
+Route::delete('/home/{id}', 'PostsController@destroy');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
