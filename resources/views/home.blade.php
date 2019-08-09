@@ -22,14 +22,8 @@
                             </tr>
                             @foreach($messages as $message)
                                 <tr>
-                                    <td>{{$message->title}}</td>
-                                    <td><a href="home/{{$post->id}}/edit" class="btn btn-default">Edit</a></td>
-                                    <td>
-                                        {!!Form::open(['action' => ['PostsController@destroy', $message->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
-                                            {{Form::hidden('_method', 'DELETE')}}
-                                            {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
-                                        {!!Form::close()!!}
-                                    </td>
+                                    <td><a href="home/{{$message->id}}">{{$message->title}}</a></td>
+                                    <td>{{$message->sender_name}}</td>
                                 </tr>
                             @endforeach
                         </table>

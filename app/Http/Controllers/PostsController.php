@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Posts;
+use App\Messages;
+use App\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -14,8 +17,8 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Posts::all();
-        return view('posts.index')->with('posts', $posts);
+        $messages = Messages::all();
+        return view('posts.index')->with('posts', $messages);
     }
 
     /**
@@ -37,13 +40,25 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         $this -> validate($request, [
-            'title' => 'required'
+            'title' => 'required',
+            'receiver' => 'required',
+            'body' => 'required'
         ]);
-        $post = new Posts;
-        $post->title = $request->input('title');
-        $post->save();
+        $receiver_name = $request->input('receiver');
+        $user = User::where('name', $receiver_name)->first();
+        if ($user === null){
+            return redirect('/home')->with('error', 'Такого пользователя не существует.');
+        }
+        $message = new Messages;
+        $sender_name = auth()->user()->name;
+        $message->sender_name = $sender_name;
+        $receiver_id = User::where('name', $receiver_name)->first();
+        $message->title = $request->input('title');
+        $message->body = $request->input('body');
+        $message->receiver_id = $receiver_id->id;
+        $message->save();
 
-        return redirect('/posts')->with('success', 'post created');
+        return redirect('/home')->with('success', 'Сообщение отправлено!');
     }
 
     /**
@@ -54,8 +69,13 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        $post = Posts::find($id);
-        return view('posts.show')->with('post', $post);
+        $message = Messages::find($id);
+        if (Auth::user()->id == $message->receiver_id){
+            return view('posts.show')->with('message', $message);
+        } 
+        else{
+            return redirect('/home')->with('error', 'Нет доступа.');
+        }
     }
 
     /**

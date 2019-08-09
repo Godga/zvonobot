@@ -12,15 +12,15 @@ use App\Posts;
 */
 
 Route::get('/', 'ZvonController@index');
-Route::get('/register', "ZvonController@register");
+//Route::get('/register', "ZvonController@register");
 
-Route::get('/posts', 'PostsController@index');
+//Route::get('/posts', 'PostsController@index');
 Route::get('/home/create', 'PostsController@create'); 
 Route::get('/home/{id}', 'PostsController@show'); 
-Route::get('/home/{id}/edit', 'PostsController@edit'); 
-Route::put('/home/{id}', 'PostsController@update'); 
+//Route::get('/home/{id}/edit', 'PostsController@edit'); 
+//Route::put('/home/{id}', 'PostsController@update'); 
 Route::post('/home/store', 'PostsController@store'); 
-Route::delete('/home/{id}', 'PostsController@destroy');
+//Route::delete('/home/{id}', 'PostsController@destroy');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
