@@ -27,6 +27,7 @@
                                 </tr>
                             @endforeach
                         </table>
+                    {{ $messages->links() }}
                     @else
                         <p>У вас нет входящих сообщений :(</p>
                     @endif

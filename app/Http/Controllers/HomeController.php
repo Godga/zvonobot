@@ -27,7 +27,7 @@ class HomeController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $messages = Messages::where('receiver_id', '=', $user_id)->paginate('10');
+        $messages = Messages::where('receiver_id', '=', $user_id)->paginate('5');
         return view('home')->with('messages', $messages);
     }
 }
